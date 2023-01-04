@@ -84,7 +84,14 @@ public class apiController {
 		return new ResponseEntity<Usuario>(user,HttpStatus.OK);
 	}
 	
+	@GetMapping("/buscarNome")
+	@ResponseBody
+	public ResponseEntity<List<Usuario>> buscarNome(@RequestParam(name = "nome") String nome){ 
 	
+		List<Usuario> user = usuarioRepository.buscarNome(nome.trim().toUpperCase());
+		
+		return new ResponseEntity<List<Usuario>>(user,HttpStatus.OK);
+	}
 	
 	
 	
