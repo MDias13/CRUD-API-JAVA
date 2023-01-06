@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+  
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+	<link <link rel="stylesheet" href="/style/main.css">
+    <title>Rest API</title>
+  </head>
+  <body>
+
+    <div class="container">
+        <div class="card-deck mb-3 text-center mt-4">
+        
+       
+            <div class="card mb-4 shadow-sm">
+              <div class="card-header">
+                <h4 class="my-0 font-weight-normal">Rest API - Panel</h4>
+              </div>
+              <div class="p-3">
+                  <form action="" id="form">
+                      <div class="text-left">
+                          <label >ID:</label>
+                          <input type="number" id="id" class="form-control" readonly>
+                      </div>
+                      <div class="text-left">
+                          <label >Nome:</label>
+                          <input type="text" class="form-control" id="nome">
+                      </div>
+                      <div class="text-left">
+                          <label >Idade:</label>
+                          <input type="number" class="form-control" id="idade">
+                      </div>
+                  </form>
+        
+
+
+              <button type="button" class="btn btn-lg  btn-primary btn-success mt-3" onclick="salvarUsuario()">Salvar</button>
+              <button type="button" class="btn btn-lg  btn-primary btn-danger mt-3" onclick="document.getElementById('form').reset();">Novo</button>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+  
+        
+
+
+
+
+
+    <script src="https://code.jquery.com/jquery-3.6.3.js" integrity="sha256-nQLuAZGRRcILA+6dMBOvcRh5Pe310sBpanc6+QBmyVM=" crossorigin="anonymous"></script>
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+	<script type="text/javascript">
+		function salvarUsuario(){
+			var  id = $("#id").val();	
+			var  nome = $("#nome").val();	
+			var  idade = $("#idade").val();	
+			
+			$.ajax({
+				method: "POST",
+				url: "salvar",
+				data: JSON.stringify({id : id,nome : nome, idade : idade}),
+				contentType: "application/json;charset-utf-8",
+				success: function(response){
+					
+					$("#id").val(response.id);
+					alert("Gravou com sucesso");
+				}
+				
+			}).fail(function (xhr,status,errorThrown){
+				alert("Erro ao Salvar o Usuario " + xhr.responseText);
+			})
+				
+		}
+	
+	
+	</script>
+	
+
+
+
+  </body>
+</html>
