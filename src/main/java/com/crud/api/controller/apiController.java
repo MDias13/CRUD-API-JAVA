@@ -7,7 +7,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,9 +60,9 @@ public class apiController {
 		return new ResponseEntity<String>("Usuario Deletado com Sucesso",HttpStatus.OK);
 	}
 	
-	@GetMapping("/buscar/{id}")
+	@GetMapping("/buscar")
 	@ResponseBody
-	public ResponseEntity<Usuario> buscar(@PathVariable(name = "id") Long id){ /*Recebe os dados para salvar */
+	public ResponseEntity<Usuario> buscar(@RequestParam(name = "id") Long id){ /*Recebe os dados para salvar */
 	
 		Usuario user = usuarioRepository.findById(id).get();
 		
