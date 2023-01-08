@@ -65,19 +65,23 @@
           <button type="button" class="btn btn-success" onclick="pesquisarUser()">Buscar</button>
           
         </form>
-        <table class="table" id="tabela-resultado">
+  <div style="height: 300px;overflow:scroll;">
+
+  <table class="table" id="tabela-resultado">
   <thead>
     <tr>
       <th scope="col">ID</th>
       <th scope="col">Nome</th>
       <th scope="col">Idade</th>
       <th scope="col">Editar</th>
+      <th scope="col">Deletar</th>
     </tr>
   </thead>
   <tbody>
   
   </tbody>
 </table>
+ </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-dismiss="modal">Voltar</button>
@@ -97,10 +101,23 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 
 	<script type="text/javascript">
-		function salvarUsuario(){
+		
+	function salvarUsuario(){
+		
 			var  id = $("#id").val();	
 			var  nome = $("#nome").val();	
 			var  idade = $("#idade").val();	
+			
+			if(nome == null || nome != null && nome.trim() == ''){
+				alert("Preencha todos os campos");
+				return;
+			}
+			
+			if(idade == null || idade != null && idade.trim() == ''){
+				alert("Preencha todos os campos");
+				return;
+			}
+			
 			
 			$.ajax({
 				method: "POST",
@@ -131,7 +148,7 @@
 						$('#tabela-resultado > tbody > tr').remove();
 						
 						for (var i = 0; i < response.length ; i++){
-						$('#tabela-resultado > tbody').append('<tr><td>'+response[i].id+'</td><td>'+response[i].nome+'</td><td>'+response[i].idade+'</td><td><button type="button" class="btn btn-lg  btn-primary btn-warning " onclick="edicao('+response[i].id+')" >Editar</button></td></tr>');
+						$('#tabela-resultado > tbody').append('<tr id="'+response[i].id+'"><td>'+response[i].id+'</td><td>'+response[i].nome+'</td><td>'+response[i].idade+'</td><td><button type="button" class="btn btn-lg  btn-primary btn-warning " onclick="edicao('+response[i].id+')" >Editar</button></td><td><button type="button" class="btn btn-lg  btn-primary btn-danger " onclick="deletar('+response[i].id+')" >Deletar</button></td></tr>');
 						}
 						
 						
@@ -160,6 +177,24 @@
 				
 			}).fail(function (xhr,status,errorThrown){
 				alert("Erro ao Preencher na tela" + xhr.responseText);
+			})
+		}
+		
+		function deletar(id){
+			$.ajax({
+				method: "DELETE",
+				url: "deletar",
+				data: "id=" + id,
+				success: function(response){
+					
+					$('#'+ id).remove();
+					
+					
+					alert(response)
+				}
+				
+			}).fail(function (xhr,status,errorThrown){
+				alert("Erro ao Deletar" + xhr.responseText);
 			})
 		}
 	
